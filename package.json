@@ -1,5 +1,5 @@
 {
-  "name": "pin-generator",
+  "name": "symbol-marker-genelator",
   "type": "module",
   "scripts": {
     "sharp": "node --loader ts-node/esm src/createBySharp.ts",
