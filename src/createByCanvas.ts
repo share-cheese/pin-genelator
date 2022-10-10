@@ -27,11 +27,13 @@ const run = async () => {
         itemWidth,
         itemWidth
       );
+
+      const baseName = base.replace(".svg", "");
+      const itemName = item.replace(".svg", "");
+      const symbolName = `symbol-${baseName}-${itemName}`;
+
       await fs.promises.mkdir("out", { recursive: true });
-      fs.writeFileSync(
-        `out/${base.replace(".svg", "")}-${item.replace(".svg", "")}.svg`,
-        canvas.toBuffer()
-      );
+      fs.writeFileSync(`out/${symbolName}.svg`, canvas.toBuffer());
     });
   });
 };
