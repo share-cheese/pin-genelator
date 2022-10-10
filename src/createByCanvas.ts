@@ -5,6 +5,8 @@ import fs from "fs";
 const CANVAS_WIDTH = 200;
 
 const run = async () => {
+  await fs.promises.rm("out", { recursive: true, force: true });
+
   const bases = fs.readdirSync("src/img/base");
   const items = fs.readdirSync("src/img/item");
 
@@ -17,11 +19,11 @@ const run = async () => {
       const itemSvg = await loadImage(`src/img/item/${item}`);
       ctx.drawImage(baseSvg, 0, 0, CANVAS_WIDTH, CANVAS_WIDTH * 1.4);
 
-      const itemWidth = (CANVAS_WIDTH / 100) * 36;
+      const itemWidth = (CANVAS_WIDTH / 100) * 48;
       ctx.drawImage(
         itemSvg,
         (CANVAS_WIDTH - itemWidth) / 2,
-        (CANVAS_WIDTH / 100) * 24,
+        (CANVAS_WIDTH * 1.4 - itemWidth) / 2 - 24,
         itemWidth,
         itemWidth
       );
