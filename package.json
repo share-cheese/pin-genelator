@@ -2,9 +2,11 @@
   "name": "pin-generator",
   "type": "module",
   "scripts": {
-    "start": "node --loader ts-node/esm src/main.ts"
+    "start": "node --loader ts-node/esm src/main.ts",
+    "canvas": "node --loader ts-node/esm src/canvas.ts"
   },
   "dependencies": {
+    "canvas": "^2.10.1",
     "sharp": "^0.31.1"
   },
   "devDependencies": {
