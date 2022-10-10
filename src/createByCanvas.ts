@@ -2,8 +2,9 @@
 import { createCanvas, loadImage } from "canvas";
 import fs from "fs";
 
-const CANVAS_WIDTH = 200;
+const CANVAS_WIDTH = 50;
 const CANVAS_HEIGHT = CANVAS_WIDTH * 1.4;
+const FORMAT = "svg";
 
 const run = async () => {
   await fs.promises.rm("out", { recursive: true, force: true });
@@ -13,7 +14,7 @@ const run = async () => {
 
   bases.forEach((base) => {
     items.forEach(async (item) => {
-      const canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT, "svg");
+      const canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT, FORMAT);
       const ctx = canvas.getContext("2d");
 
       const baseSvg = await loadImage(`src/img/base/${base}`);
@@ -34,7 +35,7 @@ const run = async () => {
       const symbolName = `marker-${baseName}-${itemName}`;
 
       await fs.promises.mkdir("out", { recursive: true });
-      fs.writeFileSync(`out/${symbolName}.svg`, canvas.toBuffer());
+      fs.writeFileSync(`out/${symbolName}.${FORMAT}`, canvas.toBuffer());
     });
   });
 };
