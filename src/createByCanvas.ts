@@ -31,7 +31,7 @@ const run = async () => {
 
       const baseName = base.replace(".svg", "");
       const itemName = item.replace(".svg", "");
-      const symbolName = `symbol-${baseName}-${itemName}`;
+      const symbolName = `marker-${baseName}-${itemName}`;
 
       await fs.promises.mkdir("out", { recursive: true });
       fs.writeFileSync(`out/${symbolName}.svg`, canvas.toBuffer());
