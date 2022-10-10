@@ -2,15 +2,36 @@
 import { createCanvas, loadImage } from "canvas";
 import fs from "fs";
 
-const run = async () => {
-  const canvas = createCanvas(100, 140, "svg");
-  const ctx = canvas.getContext("2d");
+const CANVAS_WIDTH = 200;
 
-  const base = await loadImage("src/img/blue.svg");
-  const item = await loadImage("src/img/circle.svg");
-  ctx.drawImage(base, 0, 0, 100, 140);
-  ctx.drawImage(item, 50 - 18, 24, 36, 36);
-  fs.writeFileSync("out.svg", canvas.toBuffer());
+const run = async () => {
+  const bases = fs.readdirSync("src/img/base");
+  const items = fs.readdirSync("src/img/item");
+
+  bases.forEach((base) => {
+    items.forEach(async (item) => {
+      const canvas = createCanvas(CANVAS_WIDTH, CANVAS_WIDTH * 1.4, "svg");
+      const ctx = canvas.getContext("2d");
+
+      const baseSvg = await loadImage(`src/img/base/${base}`);
+      const itemSvg = await loadImage(`src/img/item/${item}`);
+      ctx.drawImage(baseSvg, 0, 0, CANVAS_WIDTH, CANVAS_WIDTH * 1.4);
+
+      const itemWidth = (CANVAS_WIDTH / 100) * 36;
+      ctx.drawImage(
+        itemSvg,
+        (CANVAS_WIDTH - itemWidth) / 2,
+        (CANVAS_WIDTH / 100) * 24,
+        itemWidth,
+        itemWidth
+      );
+      await fs.promises.mkdir("out", { recursive: true });
+      fs.writeFileSync(
+        `out/${base.replace(".svg", "")}-${item.replace(".svg", "")}.svg`,
+        canvas.toBuffer()
+      );
+    });
+  });
 };
 
 run();
